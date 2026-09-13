@@ -1,0 +1,33 @@
+{
+  "name": "net-bypass",
+  "version": "1.0.0",
+  "description": "Net Bypass — India's Truly Offline Rural Services Super-App",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:seed": "node backend/database/seed.js",
+    "test": "node --test test/api.test.js"
+  },
+  "keywords": [
+    "offline-first",
+    "rural-india",
+    "pwa",
+    "agritech",
+    "govtech",
+    "sqlite"
+  ],
+  "author": "Net Bypass Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.8.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

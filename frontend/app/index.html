@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Net Bypass — Truly Offline Rural Services Super-App</title>
+  
+  <!-- Manifest & Favicon -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/frontend/assets/icon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#16a34a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Stylesheets & Fonts -->
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/frontend/styles/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <a href="/app" class="app-brand-left">
+      <div class="logo-box">
+        <i class="fa-solid fa-wheat-awn"></i>
+      </div>
+      <div>
+        <span class="app-title-sm" data-i18n="appName">Net Bypass</span>
+        <span class="app-subtitle-sm" data-i18n="tagline">Truly Offline Rural Super-App</span>
+      </div>
+    </a>
+
+    <div class="app-header-actions">
+      <!-- Network & Offline Status Pill -->
+      <div id="network-status-pill" class="status-pill status-online" onclick="window.app.openOfflineCenter()">
+        <span class="pulse-dot"></span>
+        <span id="network-status-text">Online</span>
+      </div>
+
+      <!-- Language Selector -->
+      <button class="btn btn-secondary btn-sm" onclick="window.app.toggleLanguage()" id="lang-btn" title="Toggle English / हिन्दी">
+        <i class="fa-solid fa-language"></i> <span id="lang-label">हिन्दी</span>
+      </button>
+
+      <!-- Profile / Auth Button -->
+      <button class="btn btn-secondary btn-sm" onclick="window.app.openProfileModal()" id="profile-btn" title="User Profile">
+        <i class="fa-solid fa-user"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Offline Notice Bar (Appears when offline or simulating) -->
+  <div id="offline-bar" class="offline-info-banner" style="display: none;">
+    <div class="banner-text">
+      <i class="fa-solid fa-plane-slash"></i>
+      <span><strong>Offline Mode Active:</strong> Operating from local device memory. Zero data loss.</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <span id="pending-sync-counter" class="badge-tag badge-orange">0 Pending</span>
+      <button class="btn-sync-now" onclick="window.syncEngine.triggerSync()">Sync Now</button>
+    </div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <main class="app-container" id="app-view">
+    <!-- Dynamically rendered by app.js -->
+  </main>
+
+  <!-- Bottom Navigation Bar for Mobile -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" data-tab="home" onclick="window.app.switchTab('home')">
+      <i class="fa-solid fa-house"></i>
+      <span data-i18n="home">Home</span>
+    </button>
+    <button class="nav-tab" data-tab="services" onclick="window.app.switchTab('services')">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <span data-i18n="services">Services</span>
+    </button>
+    <button class="nav-tab" data-tab="mandi" onclick="window.app.switchTab('mandi')">
+      <i class="fa-solid fa-chart-line"></i>
+      <span data-i18n="mandi">Mandi</span>
+    </button>
+    <button class="nav-tab" data-tab="schemes" onclick="window.app.switchTab('schemes')">
+      <i class="fa-solid fa-landmark"></i>
+      <span data-i18n="schemes">Schemes</span>
+    </button>
+    <button class="nav-tab" data-tab="jobs" onclick="window.app.switchTab('jobs')">
+      <i class="fa-solid fa-briefcase"></i>
+      <span data-i18n="jobs">Jobs</span>
+    </button>
+    <button class="nav-tab" data-tab="marketplace" onclick="window.app.switchTab('marketplace')">
+      <i class="fa-solid fa-store"></i>
+      <span data-i18n="marketplace">Market</span>
+    </button>
+    <button class="nav-tab" data-tab="requests" onclick="window.app.switchTab('requests')">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span data-i18n="requests">Requests</span>
+      <span id="nav-pending-badge" class="nav-tab-badge" style="display: none;">0</span>
+    </button>
+  </nav>
+
+  <!-- Reusable Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div id="global-modal-backdrop" class="modal-backdrop"></div>
+
+  <!-- Scripts -->
+  <script src="/frontend/offline/db.js"></script>
+  <script src="/frontend/offline/sync-engine.js"></script>
+  <script src="/frontend/services/auth.js"></script>
+  <script src="/frontend/services/api.js"></script>
+  <script src="/frontend/components/ui-components.js"></script>
+  <script src="/frontend/app/app.js"></script>
+
+  <script>
+    // Register Service Worker for true offline PWA capability
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((reg) => console.log('[PWA] Service Worker registered with scope:', reg.scope))
+          .catch((err) => console.warn('[PWA] Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

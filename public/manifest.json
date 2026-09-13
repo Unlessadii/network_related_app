@@ -1,0 +1,19 @@
+{
+  "name": "Net Bypass - Rural Services Super-App",
+  "short_name": "Net Bypass",
+  "description": "India's Truly Offline Rural Services Super-App for Mandi rates, Welfare Schemes, Jobs & Emergency Services.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/frontend/assets/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "government"]
+}
